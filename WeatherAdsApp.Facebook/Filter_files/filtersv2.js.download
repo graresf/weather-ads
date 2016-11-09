@@ -1,0 +1,1190 @@
+﻿
+$(function () {
+    var valueMap = [-168, -144, -120, -96, -72, -48, -24, -12, -6, -3, 0, 3, 6, 12, 24, 48, 72, 96, 120, 144, 168];
+    var labelMap = ["-7d", "-6d", "-5d", "-4d", "-3d", "-2d", "-1d", "-12h", "-6h", "-3h",
+        "Now",
+        "+3h", "+6h", "+12h", "+1d", "+2d", "+3d", "+4d", "+5d", "+6d", "+7d"]
+
+    //var middle_index = (valueMap.length / 2)-1;
+    var default_timeframe_slider = $(".default-timeframe-slider").slider({
+        min: 0,
+        max: valueMap.length - 1,
+        values: [0, 1],
+        formatter: function (value) {
+            var output = (value[0] == value[1]) ? labelMap[value[0]] : labelMap[value[0]] + "," + labelMap[value[1]];
+
+            return output;
+        },
+        range: true
+    });
+
+    //setTimeframeAdvancedSettings("#filter_temperature_element_timeframe_value", "#filter_temperature_element_selected_timeframe_advanced_option");
+    //checkTimeframeAdvancedSettings(
+    //    valueMap[$("#filter_temperature_element_timeframe_value").val().split(',')[0]],
+    //    valueMap[$("#filter_temperature_element_timeframe_value").val().split(',')[1]],
+    //    "#filter_temperature_element_selected_timeframe_advanced_option");
+
+    //setTimeframeAdvancedSettings("#filter_rain_element_timeframe_value", "#filter_rain_element_selected_timeframe_advanced_option");
+    //checkTimeframeAdvancedSettings(
+    //    valueMap[$("#filter_rain_element_timeframe_value").val().split(',')[0]],
+    //    valueMap[$("#filter_rain_element_timeframe_value").val().split(',')[1]],
+    //    "#filter_rain_element_selected_timeframe_advanced_option");
+
+    //setTimeframeAdvancedSettings("#filter_snow_element_timeframe_value", "#filter_snow_element_selected_timeframe_advanced_option");
+    //checkTimeframeAdvancedSettings(
+    //    valueMap[$("#filter_snow_element_timeframe_value").val().split(',')[0]],
+    //    valueMap[$("#filter_snow_element_timeframe_value").val().split(',')[1]],
+    //    "#filter_snow_element_selected_timeframe_advanced_option");
+
+    //setTimeframeAdvancedSettings("#filter_sunny_element_timeframe_value", "#filter_sunny_element_selected_timeframe_advanced_option");
+    //checkTimeframeAdvancedSettings(
+    //    valueMap[$("#filter_sunny_element_timeframe_value").val().split(',')[0]],
+    //    valueMap[$("#filter_sunny_element_timeframe_value").val().split(',')[1]],
+    //    "#filter_sunny_element_selected_timeframe_advanced_option");
+
+    //setTimeframeAdvancedSettings("#filter_cloud_element_timeframe_value", "#filter_cloud_element_selected_timeframe_advanced_option");
+    //checkTimeframeAdvancedSettings(
+    //    valueMap[$("#filter_cloud_element_timeframe_value").val().split(',')[0]],
+    //    valueMap[$("#filter_cloud_element_timeframe_value").val().split(',')[1]],
+    //    "#filter_cloud_element_selected_timeframe_advanced_option");
+
+    //setTimeframeAdvancedSettings("#filter_windspeed_element_timeframe_value", "#filter_windspeed_element_selected_timeframe_advanced_option");
+    //checkTimeframeAdvancedSettings(
+    //    valueMap[$("#filter_windspeed_element_timeframe_value").val().split(',')[0]],
+    //    valueMap[$("#filter_windspeed_element_timeframe_value").val().split(',')[1]],
+    //    "#filter_windspeed_element_selected_timeframe_advanced_option");
+
+    //setTimeframeAdvancedSettings("#filter_humidity_element_timeframe_value", "#filter_humidity_element_selected_timeframe_advanced_option");
+    //checkTimeframeAdvancedSettings(
+    //    valueMap[$("#filter_humidity_element_timeframe_value").val().split(',')[0]],
+    //    valueMap[$("#filter_humidity_element_timeframe_value").val().split(',')[1]],
+    //    "#filter_humidity_element_selected_timeframe_advanced_option");
+
+    //setTimeframeAdvancedSettings("#filter_pressure_element_timeframe_value", "#filter_pressure_element_selected_timeframe_advanced_option");
+    //checkTimeframeAdvancedSettings(
+    //    valueMap[$("#filter_pressure_element_timeframe_value").val().split(',')[0]],
+    //    valueMap[$("#filter_pressure_element_timeframe_value").val().split(',')[1]],
+    //    "#filter_pressure_element_selected_timeframe_advanced_option");
+
+    //setTimeframeAdvancedSettings("#filter_uvindex_element_timeframe_value", "#filter_uvindex_element_selected_timeframe_advanced_option");
+    //checkTimeframeAdvancedSettings(
+    //    valueMap[$("#filter_uvindex_element_timeframe_value").val().split(',')[0]],
+    //    valueMap[$("#filter_uvindex_element_timeframe_value").val().split(',')[1]],
+    //    "#filter_uvindex_element_selected_timeframe_advanced_option");
+
+    //function setTimeframeAdvancedSettings(value_element, advanced_options_element) {
+    //    $(value_element).change(function (value) {
+    //        checkTimeframeAdvancedSettings(valueMap[value.value.newValue[0]], valueMap[value.value.newValue[1]], advanced_options_element);
+    //    });
+    //}
+
+    // todo: remove this
+    function checkTimeframeAdvancedSettings(value0, value1, advanced_options_element) {
+        var disable_advanced_options = false;
+        if (value1 - value0 < 24)
+            disable_advanced_options = true;
+        else
+            disable_advanced_options = false;
+
+        $(advanced_options_element).prop('disabled', disable_advanced_options);
+    }
+
+    var selected_unit = $('.temperature-unit input:checked').val();
+    var temp_unit = "°C";
+    if (selected_unit == "f")
+        temp_unit = "°F";
+    var temperature_slider = $(".filter_temperature_element_value").slider({
+        formatter: function (value) {
+            return valueWithUnit(value, temp_unit);
+        }
+    });
+
+
+    $(".filter_humidity_element_value").slider({
+        formatter: function (value) {
+            //return value + "%";
+            if (value.toString().indexOf(",") > -1)
+                value = value.toString().replace(",", "% : ");
+
+            return value + "%";
+        }
+    });
+    $(".filter_pressure_element_value").slider({
+        formatter: function (value) {
+            //return value + "%";
+            if (value.toString().indexOf(",") > -1)
+                value = value.toString().replace(",", "mb : ");
+
+            return value + "mb";
+        }
+    });
+    $(".filter_uvindex_element_value").slider();
+
+    // setup 2 markers
+    setupTwoMarkers(".filter_temperature_element_selected_operation",
+        ".filter_temperature_element_value",
+        ".hidden_temperature_value");
+    setupTwoMarkers(".filter_humidity_element_selected_operation",
+        ".filter_humidity_element_value",
+        ".hidden_humidity_value");
+    setupTwoMarkers(".filter_pressure_element_selected_operation",
+        ".filter_pressure_element_value",
+        ".hidden_pressure_value");
+    setupTwoMarkers(".filter_uvindex_element_selected_operation",
+        ".filter_uvindex_element_value",
+        ".hidden_uvindex_value");
+
+    setUpActionTypes();
+
+    setUpBidModifier();
+
+    setUpNoConditionsMetActions();
+
+    clearActions();
+
+    setUpMultipleFilters();
+
+    checkHiddenTabs("li.add-filter .a");
+
+    setUpdateFilterName();
+
+    setUpUnits(".filter_temperature_element_value");
+
+    $("#filter_name").keypress(function (e) {
+        // Check if it is the enter key
+        if (e.which == 13) {
+            $(':focus').blur();
+            e.preventDefault();
+        }
+    });
+
+    // advanced_settings
+    $(".advanced_settings > label").click(function () {
+        var h = $(this).siblings("[type=hidden]");
+        var h_val = h.val().toLowerCase();
+
+        if (h_val == "true") {
+            var is_frequency_on = $(this).closest(".advanced_settings").find(".frequency input:radio:checked").val() == 0;
+            var is_hoursofday_on = $(this).closest(".advanced_settings").find(".adv-set-checkbox.hours-of-day input[type='checkbox']").is(':checked');
+            var is_daysofweek_on = $(this).closest(".advanced_settings").find(".adv-set-checkbox.days-of-week input[type='checkbox']").is(':checked');
+
+            if (is_frequency_on || is_hoursofday_on || is_daysofweek_on) {
+                return;
+            }            
+        }
+        $(this).parent().find(".body").slideToggle();
+        h.val(h_val === "true" ? "false" : "true");
+    });
+    $(".adv-set-checkbox").change(function () {
+        var is_checked = $(this).find("input[type='checkbox']").is(':checked');
+        $(this).find("input[type='hidden']").val(is_checked);
+    });
+    $(".advanced_settings .hours-of-days select")
+        .change(function () {
+            var is_checked = $(this).closest(".advanced_settings").find(".adv-set-checkbox.hours-of-day input[type='checkbox']").is(':checked');
+            if (!is_checked) {
+                $(this).closest(".advanced_settings").find(".adv-set-checkbox.hours-of-day input[type='checkbox']").prop("checked",true);
+            }
+        });
+    $(".adv-set-checkbox.hours-of-day").change(function () {
+        var is_checked = $(this).find("input[type='checkbox']").is(':checked');
+        if (!is_checked) {
+            $(this).closest(".advanced_settings").find(".hours-of-days select").val("0");
+        }
+    });
+    $(".adv-set-checkbox.days-of-week").change(function () {
+        var is_checked = $(this).find("input[type='checkbox']").is(':checked');
+        var module = $(this).closest(".module-row").find(".timeframe-slider");
+        if (!is_checked) {
+            module.removeClass("disabledslider");
+        } else {
+            module.addClass("disabledslider");
+        }
+    });
+
+
+    $(".btn-close").click(function () {
+        window.location.reload();
+    });
+});
+
+var $btn_save = $("#btn-save");
+
+$(window).load(function (e) {
+    $('#form0 :input').change(function () {
+        if ($btn_save.is(":disabled"))
+            $btn_save.removeAttr("disabled");
+    });
+});
+
+function valueWithUnit(value, unit) {
+    if (value.toString().indexOf(",") > -1)
+        value = value.toString().replace(",", unit + " : ");
+    return value + unit;
+}
+
+function setUpUnits(slider) {
+
+    //$.each(slider, function (index, sl) {
+        $(".temperature-unit input:radio").change(function () {
+            var u = $(this).val();
+
+            console.log(u);
+            $(".temperature-unit input:radio").filter("[value='" + u + "']").attr('checked', true);
+
+            $.ajax({
+                url: "../../Campaign/UpdateUnit",
+                type: "POST",
+                data: { element: "temperature", unit: u },
+                dataType: JSON,
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function (data) {
+                    console.log(data);
+                }, complete: function () {
+                }
+            });
+
+            
+            $.each($(slider), function (index, sl) {
+                //var $sl = $(this).closest(".amount").find(".filter_temperature_element_value");
+
+                var slider_value = $(sl).data('slider').getValue();
+                //console.log(slider_value);
+                var temp_unit = "";
+                if (u == "c") {
+                    temp_unit = "°C";
+                    var c_value = convert(u, slider_value);
+                    setupSliderWithUnit(sl, -50, 50, c_value, false, temp_unit);
+                } else if (u == "f") {
+                    temp_unit = "°F";
+                    var f_value = convert(u, slider_value);
+                    setupSliderWithUnit(sl, -58, 122, f_value, false, temp_unit);
+                }
+                $(sl).slider('refresh');
+    });
+
+        });
+
+    var selected_unit = $('.temperature-unit input:checked').val();
+    var temp_unit = "";
+    if (selected_unit == "c") {
+        temp_unit = "°C";
+        $("b.temperature-min").text(-50 + temp_unit);
+        $("b.temperature-max").text(50 + temp_unit);
+    } else if (selected_unit == "f") {
+        temp_unit = "°F";
+        $("b.temperature-min").text(-58 + temp_unit);
+        $("b.temperature-max").text(122 + temp_unit);
+
+        $(slider).slider("setAttribute", "min", -58);
+        $(slider).slider("setAttribute", "max", 122);
+        $(slider).slider('refresh');
+    }
+}
+
+function convert(unit, value) {
+    if (unit == "f") {
+        F = value * 9 / 5 + 32;
+        return Math.round(F);
+    } else {
+        C = (value - 32) * 5 / 9;
+        return Math.round(C);
+    }
+}
+
+function setupSliderWithUnit(slider,min,max,slider_value, is_range,temp_unit){
+    $(slider).slider("setAttribute", "min", min);
+    $(slider).slider("setAttribute", "max", max);
+    $(slider).slider("setAttribute", "value", slider_value);
+    $(slider).slider("setAttribute", "range", is_range);
+    $(slider).slider({ formatter: function (value) { return valueWithUnit(value, temp_unit); } });
+
+    $("b.temperature-min").text(min + temp_unit);
+    $("b.temperature-max").text(max + temp_unit);
+
+}
+
+function showUnit(u) {
+    if (u == "c") {
+        $(".temperature.celsius").show();
+        $(".temperature.fahrenheit").hide();
+    } else if (u == "f") {
+        $(".temperature.celsius").hide();
+        $(".temperature.fahrenheit").show();
+    }
+}
+
+function setUpdateFilterName() {
+    $(".filters-tabs a").click(function () {
+        var $li = $(this).closest("li");
+        var $ul = $(this).closest("ul");
+
+        if ($li.hasClass("active")) {
+            if ($li.hasClass("opened")) {
+                $ul.find("li").removeClass("opened");
+                $li.addClass("opened");
+                $li.addClass("editing");
+                $li.find(".text-box input").focus();
+            }
+            else {
+                $ul.find("li").removeClass("opened");
+                $li.addClass("opened");
+            }
+        }
+        else {
+            $ul.find("li").removeClass("opened");
+            $li.addClass("opened");
+        }
+    });
+
+    //$(".filters-tabs .text-box input").focusout(function () {
+    //});
+
+    $(".filters-tabs .text-box input").focusout(function () {
+        var text = $(this).val();
+        var $li = $(this).closest("li");
+        $li.removeClass("editing");
+        if (!$li.hasClass("active")) {
+            $li.removeClass("opened");
+        }
+        $li.find("a.filter-name").text(text);
+    }).keypress(function (e) {
+        if (e.which == 13) {
+            $(this).blur();
+            e.preventDefault();
+        }
+    });
+}
+
+function setUpMultipleFilters() {
+    $("li.add-filter .a").click(function (e) {
+        e.preventDefault();
+        if ($(this).attr('disabled') == 'disabled') {
+            return false;
+        }
+
+        $(".tab-content .tab-pane.active").removeClass("active");
+        $("ul.filters-tabs li.active").removeClass("opened");
+        $("ul.filters-tabs li.active").removeClass("active");
+
+        var hidden_tab = $("ul.filters-tabs li.hide").first();
+        $(hidden_tab).addClass("active opened");
+        $(hidden_tab).removeClass("hide");
+
+        var hidden_tab_content_id = $(hidden_tab).find("a").attr("data-target");
+        var hidden_tab_content = $(hidden_tab_content_id);
+        $(hidden_tab_content).addClass("active");
+        $(hidden_tab_content).find(".filter_is_active").val(true);
+
+        checkHiddenTabs($(this));
+    });
+}
+
+function checkHiddenTabs(link) {
+    var hidden_tabs = $("ul.filters-tabs li.hide").length;
+
+    if (hidden_tabs == 0) {
+        $(link).attr('disabled', 'disabled');
+    } else {
+        $(link).removeAttr("disabled")
+    }
+}
+
+function setUpNoConditionsMetActions() {
+    $(".no-conditions-met-options button").click(function () {
+        if (!$(this).hasClass("pressed")) {
+            var $parent = $(this).closest(".no-conditions-met-options");
+            $parent.find("button").toggleClass("pressed");
+
+            var action = $(this).val();
+            $parent.find("input").val(action);
+        }
+    });
+}
+
+function setUpActionTypes() {
+    $(".choice-btns a").click(function () {
+        if (!$(this).hasClass("pressed")) {
+            var $parent = $(this).closest(".choice-btns");
+            $parent.find("li").find("a").toggleClass("pressed");
+
+            var action = getActionTypeByString($(this).text().toLowerCase());
+            $parent.find("input").val(action);
+        }
+    });
+}
+
+// var filter_bid_modifier_percentage = $(".filter_bid_modifier_percentage");
+// var bid_button_value = $(".bid-value");
+
+function setUpBidModifier() {
+    var increment = 5;
+    var to = null; // Timeout object
+    var int = null; // Interval object
+
+    $(".bid-plus").mousedown(function () {
+        var filter_bid_modifier_percentage = $(this).closest(".bid-modifier").find(".filter_bid_modifier_percentage");
+        var bid_button_value = $(this).closest(".bid-modifier").find(".bid-value");
+        var value = filter_bid_modifier_percentage.val();
+        value = incrementBid(value, increment, filter_bid_modifier_percentage, bid_button_value);
+
+        to = setTimeout(function () {
+            int = setInterval(function () {
+                value = incrementBid(value, increment, filter_bid_modifier_percentage, bid_button_value);
+            }, 75);
+        }, 500);
+    }).on("mouseup", function () {
+        clearTimeout(to); // Clear the timeout
+        clearInterval(int); // Clear the interval
+    });
+
+    $(".bid-minus").mousedown(function () {
+        var filter_bid_modifier_percentage = $(this).closest(".bid-modifier").find(".filter_bid_modifier_percentage");
+        var bid_button_value = $(this).closest(".bid-modifier").find(".bid-value");
+        var value = filter_bid_modifier_percentage.val();
+        value = decrementBid(value, increment, filter_bid_modifier_percentage, bid_button_value);
+
+        to = setTimeout(function () {
+            int = setInterval(function () {
+                value = decrementBid(value, increment, filter_bid_modifier_percentage, bid_button_value);
+            }, 75);
+        }, 500);
+    }).on("mouseup", function () {
+        clearTimeout(to); // Clear the timeout
+        clearInterval(int); // Clear the interval
+    });
+}
+
+function incrementBid(value, increment, filter_bid_modifier_percentage, bid_button_value) {
+    if (value < 500) {
+        value = parseInt(value) + increment;
+        filter_bid_modifier_percentage.val(value);
+
+        if (value > 0)
+            bid_button_value.text("+" + value + "%");
+        else
+            bid_button_value.text(value + "%");
+    }
+
+    return value;
+}
+
+function decrementBid(value, increment, filter_bid_modifier_percentage, bid_button_value) {
+    if (value > -100) {
+        value = parseInt(value) - increment;
+        filter_bid_modifier_percentage.val(value);
+
+        if (value > 0)
+            bid_button_value.text("+" + value + "%");
+        else
+            bid_button_value.text(value + "%");
+    }
+
+    return value;
+}
+
+function getActionTypeByString(action) {
+    if (action == "or")
+        return 1;
+    else
+        return 2;
+}
+
+function clearActions() {
+    $(".weather-conditions .tab-pane").each(function (index) {
+        var i = $(this).attr("id");
+        var filter_tab_panel_id = i.replace("weatherconditions-", "");
+        var $filter_tab_panel = $("#" + filter_tab_panel_id);
+
+        var rain_select_actiontype = $filter_tab_panel.find('.tc-rain-icon .action-type');
+        var snow_select_actiontype = $filter_tab_panel.find('.tc-snowfall .action-type');
+        var sun_select_actiontype = $filter_tab_panel.find('.tc-sun .action-type');
+        var cloud_select_actiontype = $filter_tab_panel.find('.tc-cloud .action-type');
+        var windspeed_select_actiontype = $filter_tab_panel.find('.tc-wind .action-type');
+        var humidity_select_actiontype = $filter_tab_panel.find('.tc-humidity .action-type');
+        var pressure_select_actiontype = $filter_tab_panel.find('.tc-pressure .action-type');
+        var uvindex_select_actiontype = $filter_tab_panel.find('.tc-uvindex .action-type');
+
+        showActionType("tc-rain-icon", rain_select_actiontype, this);
+        showActionType("tc-snowfall", snow_select_actiontype, this);
+        showActionType("tc-sun", sun_select_actiontype, this);
+        showActionType("tc-cloud", cloud_select_actiontype, this);
+        showActionType("tc-wind", windspeed_select_actiontype, this);
+        showActionType("tc-humidity", humidity_select_actiontype, this);
+        showActionType("tc-pressure", pressure_select_actiontype, this);
+        showActionType("tc-uvindex", uvindex_select_actiontype, this);
+    });
+}
+
+function setupTwoMarkers(dropdownlist, slider, hidden) {
+    $(dropdownlist).change(function () {
+        var v = $(this).val();
+        var tab_panel = $(this).closest(".tab-pane");
+
+        var value = $(tab_panel).find(hidden).val();
+        var is_range = $(tab_panel).find(slider).slider("getAttribute", "range");
+
+        if ((v == "between" || v == "outwith") && is_range == false) {
+            if (value.indexOf(",") > -1)
+                $(tab_panel).find(slider).slider("setAttribute", "value", value);
+
+            $(tab_panel).find(slider).slider("setAttribute", "range", true);
+            $(tab_panel).find(slider).slider('refresh');
+        } else if ((v != "between" && v != "outwith") && is_range == true) {
+            if (value.indexOf(",") > -1)
+                value = value.split(",")[0].replace("[", "");
+
+            $(tab_panel).find(slider).slider("setAttribute", "value", parseInt(value));
+            $(tab_panel).find(slider).slider("setAttribute", "range", false);
+            $(tab_panel).find(slider).slider('refresh');
+        }
+    });
+}
+
+function closeCondition(condition) {
+    var id = $(condition).attr("id").replace("close", "tc");
+    $("#" + id).popover('show');
+}
+function closeConditionOnModule(condition) {
+    //var id = $(condition).attr("id").replace("close", "module");
+    //$("#" + id).popover('show');
+    $(condition).popover('show');
+}
+
+function showActionType(element_class, select_actiontype, conditions_tab_panel) {
+    var temperature_hiddenField = $(conditions_tab_panel).find('.filter_temperature_element_is_active');
+    var rain_hiddenField = $(conditions_tab_panel).find('.filter_rain_element_is_active');
+    var snow_hiddenField = $(conditions_tab_panel).find('.filter_snow_element_is_active');
+    var sun_hiddenField = $(conditions_tab_panel).find('.filter_sunny_element_is_active');
+    var cloud_hiddenField = $(conditions_tab_panel).find('.filter_cloud_element_is_active');
+    var windspeed_hiddenField = $(conditions_tab_panel).find('.filter_windspeed_element_is_active');
+    var humidity_hiddenField = $(conditions_tab_panel).find('.filter_humidity_element_is_active');
+    var pressure_hiddenField = $(conditions_tab_panel).find('.filter_pressure_element_is_active');
+    var uvindex_hiddenField = $(conditions_tab_panel).find('.filter_uvindex_element_is_active');
+
+    var temperature_button = $(conditions_tab_panel).find('button.tc-humid-icon');
+    var rain_button = $(conditions_tab_panel).find('button.tc-rain-icon');
+    var snow_button = $(conditions_tab_panel).find('button.tc-snowfall');
+    var sun_button = $(conditions_tab_panel).find('button.tc-sun');
+    var cloud_button = $(conditions_tab_panel).find('button.tc-cloud');
+    var windspeed_button = $(conditions_tab_panel).find('button.tc-wind');
+    var humidity_button = $(conditions_tab_panel).find('button.tc-humidity');
+    var pressure_button = $(conditions_tab_panel).find('button.tc-pressure');
+    var uvindex_button = $(conditions_tab_panel).find('button.tc-uvindex');
+
+    if (element_class == "tc-rain-icon") {
+        if (!temperature_button.hasClass("pressed"))
+            select_actiontype.hide();
+        else
+            select_actiontype.show();
+    }
+    if (element_class == "tc-snowfall") {
+        if (!temperature_button.hasClass("pressed") && !rain_button.hasClass("pressed"))
+            select_actiontype.hide();
+        else
+            select_actiontype.show();
+    }
+    if (element_class == "tc-sun") {
+        if (!temperature_button.hasClass("pressed") && !rain_button.hasClass("pressed") && !snow_button.hasClass("pressed"))
+            select_actiontype.hide();
+        else
+            select_actiontype.show();
+    }
+    if (element_class == "tc-cloud") {
+        if (!temperature_button.hasClass("pressed") && !rain_button.hasClass("pressed") && !snow_button.hasClass("pressed")
+            && !sun_button.hasClass("pressed"))
+            select_actiontype.hide();
+        else
+            select_actiontype.show();
+    }
+    if (element_class == "tc-wind") {
+        if (!temperature_button.hasClass("pressed") && !rain_button.hasClass("pressed") && !snow_button.hasClass("pressed")
+            && !sun_button.hasClass("pressed") && !cloud_button.hasClass("pressed"))
+            select_actiontype.hide();
+        else
+            select_actiontype.show();
+    }
+    if (element_class == "tc-humidity") {
+        if (!temperature_button.hasClass("pressed") && !rain_button.hasClass("pressed") && !snow_button.hasClass("pressed")
+            && !sun_button.hasClass("pressed") && !cloud_button.hasClass("pressed") && !windspeed_button.hasClass("pressed"))
+            select_actiontype.hide();
+        else
+            select_actiontype.show();
+    }
+    if (element_class == "tc-pressure") {
+        if (!temperature_button.hasClass("pressed") && !rain_button.hasClass("pressed") && !snow_button.hasClass("pressed")
+            && !sun_button.hasClass("pressed") && !cloud_button.hasClass("pressed") && !windspeed_button.hasClass("pressed")
+             && humidity_hiddenField.val().toLowerCase() == "false")
+            select_actiontype.hide();
+        else
+            select_actiontype.show();
+    }
+    if (element_class == "tc-uvindex") {
+        if (!temperature_button.hasClass("pressed") && !rain_button.hasClass("pressed") && !snow_button.hasClass("pressed")
+            && !sun_button.hasClass("pressed") && !cloud_button.hasClass("pressed") && !windspeed_button.hasClass("pressed")
+             && humidity_hiddenField.val().toLowerCase() == "false" && !pressure_button.hasClass("pressed"))
+            select_actiontype.hide();
+        else
+            select_actiontype.show();
+    }
+}
+
+function updateHiddens(id, conditions_tab_panel, filter_tab_panel) {
+    var temperature_hiddenField = $(conditions_tab_panel).find('.filter_temperature_element_is_active');
+    var rain_hiddenField = $(conditions_tab_panel).find('.filter_rain_element_is_active');
+    var snow_hiddenField = $(conditions_tab_panel).find('.filter_snow_element_is_active');
+    var sun_hiddenField = $(conditions_tab_panel).find('.filter_sunny_element_is_active');
+    var cloud_hiddenField = $(conditions_tab_panel).find('.filter_cloud_element_is_active');
+    var windspeed_hiddenField = $(conditions_tab_panel).find('.filter_windspeed_element_is_active');
+    var humidity_hiddenField = $(conditions_tab_panel).find('.filter_humidity_element_is_active');
+    var pressure_hiddenField = $(conditions_tab_panel).find('.filter_pressure_element_is_active');
+    var uvindex_hiddenField = $(conditions_tab_panel).find('.filter_uvindex_element_is_active');
+
+    var rain_select_actiontype = $(filter_tab_panel).find('.tc-rain-icon .action-type');
+    var snow_select_actiontype = $(filter_tab_panel).find('.tc-snowfall .action-type');
+    var sun_select_actiontype = $(filter_tab_panel).find('.tc-sun .action-type');
+    var cloud_select_actiontype = $(filter_tab_panel).find('.tc-cloud .action-type');
+    var windspeed_select_actiontype = $(filter_tab_panel).find('.tc-wind .action-type');
+    var humidity_select_actiontype = $(filter_tab_panel).find('.tc-humidity .action-type');
+    var pressure_select_actiontype = $(filter_tab_panel).find('.tc-pressure .action-type');
+    var uvindex_select_actiontype = $(filter_tab_panel).find('.tc-uvindex .action-type');
+
+    if (id == "tc-humid-icon") {
+        temperature_hiddenField.val(temperature_hiddenField.val().toLowerCase() === "true" ? "false" : "true");
+        showActionType("tc-rain-icon", rain_select_actiontype, conditions_tab_panel);
+        showActionType("tc-snowfall", snow_select_actiontype, conditions_tab_panel);
+        showActionType("tc-sun", sun_select_actiontype, conditions_tab_panel);
+        showActionType("tc-cloud", cloud_select_actiontype, conditions_tab_panel);
+        showActionType("tc-wind", windspeed_select_actiontype, conditions_tab_panel);
+        showActionType("tc-humidity", humidity_select_actiontype, conditions_tab_panel);
+        showActionType("tc-pressure", pressure_select_actiontype, conditions_tab_panel);
+        showActionType("tc-uvindex", uvindex_select_actiontype, conditions_tab_panel);
+    }
+    // rain
+    if (id == "tc-rain-icon") {
+        rain_hiddenField.val(rain_hiddenField.val().toLowerCase() === "true" ? "false" : "true");
+        showActionType(id, rain_select_actiontype, conditions_tab_panel);
+        showActionType("tc-snowfall", snow_select_actiontype, conditions_tab_panel);
+        showActionType("tc-sun", sun_select_actiontype, conditions_tab_panel);
+        showActionType("tc-cloud", cloud_select_actiontype, conditions_tab_panel);
+        showActionType("tc-wind", windspeed_select_actiontype, conditions_tab_panel);
+        showActionType("tc-humidity", humidity_select_actiontype, conditions_tab_panel);
+        showActionType("tc-pressure", pressure_select_actiontype, conditions_tab_panel);
+        showActionType("tc-uvindex", uvindex_select_actiontype, conditions_tab_panel);
+    }
+    // snow
+    if (id == "tc-snowfall") {
+        snow_hiddenField.val(snow_hiddenField.val().toLowerCase() === "true" ? "false" : "true");
+        showActionType(id, snow_select_actiontype, conditions_tab_panel);
+        showActionType("tc-sun", sun_select_actiontype, conditions_tab_panel);
+        showActionType("tc-cloud", cloud_select_actiontype, conditions_tab_panel);
+        showActionType("tc-wind", windspeed_select_actiontype, conditions_tab_panel);
+        showActionType("tc-humidity", humidity_select_actiontype, conditions_tab_panel);
+        showActionType("tc-pressure", pressure_select_actiontype, conditions_tab_panel);
+        showActionType("tc-uvindex", uvindex_select_actiontype, conditions_tab_panel);
+    }
+    // sunny
+    if (id == "tc-sun") {
+        sun_hiddenField.val(sun_hiddenField.val().toLowerCase() === "true" ? "false" : "true");
+        showActionType(id, sun_select_actiontype, conditions_tab_panel);
+        showActionType("tc-cloud", cloud_select_actiontype, conditions_tab_panel);
+        showActionType("tc-wind", windspeed_select_actiontype, conditions_tab_panel);
+        showActionType("tc-humidity", humidity_select_actiontype, conditions_tab_panel);
+        showActionType("tc-pressure", pressure_select_actiontype, conditions_tab_panel);
+        showActionType("tc-uvindex", uvindex_select_actiontype, conditions_tab_panel);
+    }
+    // cloud
+    if (id == "tc-cloud") {
+        cloud_hiddenField.val(cloud_hiddenField.val().toLowerCase() === "true" ? "false" : "true");
+        showActionType(id, cloud_select_actiontype, conditions_tab_panel);
+        showActionType("tc-wind", windspeed_select_actiontype, conditions_tab_panel);
+        showActionType("tc-humidity", humidity_select_actiontype, conditions_tab_panel);
+        showActionType("tc-pressure", pressure_select_actiontype, conditions_tab_panel);
+        showActionType("tc-uvindex", uvindex_select_actiontype, conditions_tab_panel);
+    }
+    // windspeed
+    if (id == "tc-wind") {
+        windspeed_hiddenField.val(windspeed_hiddenField.val().toLowerCase() === "true" ? "false" : "true");
+        showActionType(id, windspeed_select_actiontype, conditions_tab_panel);
+        showActionType("tc-humidity", humidity_select_actiontype, conditions_tab_panel);
+        showActionType("tc-pressure", pressure_select_actiontype, conditions_tab_panel);
+        showActionType("tc-uvindex", uvindex_select_actiontype, conditions_tab_panel);
+    }
+    // humidity
+    if (id == "tc-humidity") {
+        humidity_hiddenField.val(humidity_hiddenField.val().toLowerCase() === "true" ? "false" : "true");
+        showActionType(id, humidity_select_actiontype, conditions_tab_panel);
+        showActionType("tc-pressure", pressure_select_actiontype, conditions_tab_panel);
+        showActionType("tc-uvindex", uvindex_select_actiontype, conditions_tab_panel);
+    }
+    // pressure
+    if (id == "tc-pressure") {
+        pressure_hiddenField.val(pressure_hiddenField.val().toLowerCase() === "true" ? "false" : "true");
+        showActionType(id, pressure_select_actiontype, conditions_tab_panel);
+        showActionType("tc-uvindex", uvindex_select_actiontype, conditions_tab_panel);
+    }
+    // uvindex
+    if (id == "tc-uvindex") {
+        uvindex_hiddenField.val(uvindex_hiddenField.val().toLowerCase() === "true" ? "false" : "true");
+        showActionType(id, uvindex_select_actiontype, conditions_tab_panel);
+    }
+}
+
+function showCondition(condition) {
+    var id = $(condition).attr("id");//.replace(i, "");
+
+    var conditions_tab_panel = $(condition).closest(".tab-pane");
+    var filter_tab_panel_id = $(conditions_tab_panel).attr("id").replace("weatherconditions-", "");
+
+    var filter_tab_panel = $("#" + filter_tab_panel_id);
+    var self = $(filter_tab_panel).find("div." + id);
+
+    if ($(condition).hasClass("pressed")) {
+        var a = $(condition).parent().find('.tc');
+        $(a).popover('show');
+    }
+    else {
+        //Expand or collapse this panel
+        self.slideToggle('fast');
+
+        //Toggle active class for the current element
+        $(condition).toggleClass('pressed');
+
+        updateHiddens(id, conditions_tab_panel, filter_tab_panel);
+    }
+}
+
+function toggleCondition(yesbtn) {
+    var id = $(yesbtn).attr('id').replace("btn-yes-", "");
+
+    //var tab_panel = $(yesbtn).closest(".tab-pane");
+    var conditions_tab_panel = $(yesbtn).closest(".tab-pane");
+    var filter_tab_panel_id = $(conditions_tab_panel).attr("id").replace("weatherconditions-", "");
+
+    var filter_tab_panel = $("#" + filter_tab_panel_id);
+    var self = $(filter_tab_panel).find("div." + id);
+
+    //Expand or collapse this panel
+    self.slideToggle('fast');
+
+    //Toggle active class for the current element
+    $(conditions_tab_panel).find("." + id).toggleClass('pressed');
+
+    updateHiddens(id, conditions_tab_panel, filter_tab_panel);
+
+    $(conditions_tab_panel).find(".popover").hide();
+
+    reloadFilter(conditions_tab_panel, filter_tab_panel);
+}
+
+function toggleConditionInModule(yesbtn) {
+    var id = $(yesbtn).attr('id').replace("btn-yes-close", "tc");
+
+    var filter_tab_panel = $(yesbtn).closest(".tab-pane");
+    var filter_tab_panel_id = $(filter_tab_panel).attr("id");
+
+    var conditions_tab_panel_id = "weatherconditions-" + filter_tab_panel_id;
+    var conditions_tab_panel = $("#" + conditions_tab_panel_id);
+
+    var self = $(filter_tab_panel).find("div." + id);
+
+    //Expand or collapse this panel
+    self.slideToggle('fast');
+
+    //Toggle active class for the current element
+    $(conditions_tab_panel).find("." + id).toggleClass('pressed');
+
+    updateHiddens(id, conditions_tab_panel, filter_tab_panel);
+
+    $(filter_tab_panel).find(".popover").hide();
+}
+
+function reloadFilter(conditions_tab_panel, filter_tab_panel) {
+    //$(conditions_tab_panel).find(".cond-categories").each(function (index) {
+    //    $(this).find("button.tc").removeClass("pressed");
+    //});
+}
+
+function removeFilter(url, campaign, i) {
+    var $removed_tab = $("li.filter" + i);
+
+    // remove popover
+    $("ul.filters-tabs .popover").hide();
+
+    var was_active = $removed_tab.hasClass("active");
+
+    // 1 hide tab and tab_content
+    $removed_tab.removeClass("active");
+    $removed_tab.removeClass("opened");
+    $removed_tab.addClass("hide");
+
+    var new_filter_name = "New Filter";
+    $removed_tab.find(".text-box input").val(new_filter_name);
+    $removed_tab.find("a.filter-name").text(new_filter_name);
+
+    var $removed_content = $("#filter" + i);
+    var $removed_conditions = $("#weatherconditions-filter" + i);
+    var filter = $removed_content.find(".filter_id").val();
+    $removed_content.removeClass("active");
+    $removed_conditions.removeClass("active");
+    $removed_content.find(".filter_id").val(0);
+    $removed_content.find(".filter_is_active").val(false);
+
+    // 2 set previous or first tab and tab_content as active
+    var a = $removed_tab.index();
+    if (a == 0) {
+        a = 1;
+    }
+    else {
+        a = a - 1;
+    }
+
+    var $new_tab;
+    var $new_content;
+    var $new_conditions;
+
+    $new_tab = $("ul.filters-tabs li").eq(a);
+    a = $new_tab.val();
+    //a = parseInt(.replace("filter", ""));
+    if (was_active) {
+        $new_tab.addClass("active");
+        $new_tab.addClass("opened");
+    }
+    $new_tab.removeClass("hide");
+
+    var $new_content = $("#filter" + a);
+    var $new_conditions = $("#weatherconditions-filter" + a);
+
+    $new_tab.find(".filter_is_active").val(true);
+    $new_content.find(".filter_is_active").val(true);
+
+    if (was_active) {
+        $new_content.addClass("active");
+        $new_conditions.addClass("active");
+    }
+
+    // 3 move tab and tab_content to the end
+    var hidden_tabs = $("ul.filters-tabs li.hide").length;
+    a = 4 - hidden_tabs;
+
+    $removed_tab.insertAfter("ul.filters-tabs li:nth-child(" + a + ")");
+
+    // 4 clear all triggers and bid
+    clearTriggersAndBid($removed_conditions, $removed_content, $new_tab);
+
+    checkHiddenTabs("li.add-filter .a");
+
+    if (filter != 0) {
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: { campaign: campaign, filter: filter },
+            dataType: JSON,
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (data) {
+                console.log(data);
+            }, complete: function () {
+            }
+        });
+    }
+}
+
+function clearTriggersAndBid($removed_conditions, $removed_content, $new_tab) {
+    $removed_conditions.find("button.tc").removeClass("pressed");
+    $removed_conditions.find("input.id").val(0);
+    $removed_conditions.find("input.is_active").val(false);
+
+    $removed_content.find("div.module-row").hide();
+}
+
+$(document).ready(function () {
+    $("#filter_temperature_element_selected_operation").change(function () {
+        if ($(this).val() == "between" || $(this).val() == "notbetween") {
+        }
+    });
+
+    var allbuttons = $(".tc, .tc-chk");
+    $(allbuttons).on('click', function () {
+    });
+
+    $(".allclose").click(function () {
+        // $(this).parent().fadeOut(100, function () { $(this).remove(); });
+    });
+
+    $("select.qualifer").change(function () {
+        $(this).find("option:selected").each(function () {
+            if ($(this).attr("value") == "qlf-1") {
+                $(".box").not(".qlf-1").hide();
+                $(".qlf-1").show();
+            }
+            else if ($(this).attr("value") == "qlf-2") {
+                $(".box").not(".qlf-2").hide();
+                $(".qlf-2").show();
+            }
+            else if ($(this).attr("value") == "qlf-3") {
+                $(".box").not(".qlf-3").hide();
+                $(".qlf-3").show();
+            }
+            else if ($(this).attr("value") == "qlf-4") {
+                $(".box").not(".qlf-4").hide();
+                $(".qlf-4").show();
+            }
+            else if ($(this).attr("value") == "qlf-5") {
+                $(".box").not(".qlf-5").hide();
+                $(".qlf-5").show();
+            }
+            else {
+                $(".box").hide();
+            }
+        });
+    }).change();
+
+    $("select.rain").change(function () {
+        $(this).find("option:selected").each(function () {
+            if ($(this).attr("value") == "rain-1") {
+                $(".box").not(".rain-1").hide();
+                $(".rain-1").show();
+            }
+            else if ($(this).attr("value") == "rain-2") {
+                $(".box").not(".rain-2").hide();
+                $(".rain-2").show();
+            }
+            else if ($(this).attr("value") == "rain-3") {
+                $(".box").not(".rain-3").hide();
+                $(".rain-3").show();
+            }
+            else if ($(this).attr("value") == "rain-4") {
+                $(".box").not(".rain-4").hide();
+                $(".rain-4").show();
+            }
+
+            else {
+                $(".box").hide();
+            }
+        });
+    }).change();
+
+    $("select.suns").change(function () {
+        $(this).find("option:selected").each(function () {
+            if ($(this).attr("value") == "suns-1") {
+                $(".box").not(".suns-1").hide();
+                $(".suns-1").show();
+            }
+            else if ($(this).attr("value") == "suns-2") {
+                $(".box").not(".suns-2").hide();
+                $(".suns-2").show();
+            }
+            else if ($(this).attr("value") == "suns-3") {
+                $(".box").not(".suns-3").hide();
+                $(".suns-3").show();
+            }
+            else if ($(this).attr("value") == "suns-4") {
+                $(".box").not(".suns-4").hide();
+                $(".suns-4").show();
+            }
+
+            else {
+                $(".box").hide();
+            }
+        });
+    }).change();
+
+    $("select.cloudy").change(function () {
+        $(this).find("option:selected").each(function () {
+            if ($(this).attr("value") == "cloud-1") {
+                $(".box").not(".cloud-1").hide();
+                $(".cloud-1").show();
+            }
+            else if ($(this).attr("value") == "cloud-2") {
+                $(".box").not(".cloud-2").hide();
+                $(".cloud-2").show();
+            }
+            else if ($(this).attr("value") == "cloud-3") {
+                $(".box").not(".cloud-3").hide();
+                $(".cloud-3").show();
+            }
+            else if ($(this).attr("value") == "cloud-4") {
+                $(".box").not(".cloud-4").hide();
+                $(".cloud-4").show();
+            }
+
+            else {
+                $(".box").hide();
+            }
+        });
+    }).change();
+
+    $("select.windy").change(function () {
+        $(this).find("option:selected").each(function () {
+            if ($(this).attr("value") == "windy-1") {
+                $(".box").not(".windy-1").hide();
+                $(".windy-1").show();
+            }
+            else if ($(this).attr("value") == "windy-2") {
+                $(".box").not(".windy-2").hide();
+                $(".windy-2").show();
+            }
+            else if ($(this).attr("value") == "windy-3") {
+                $(".box").not(".windy-3").hide();
+                $(".windy-3").show();
+            }
+            else if ($(this).attr("value") == "windy-4") {
+                $(".box").not(".windy-4").hide();
+                $(".windy-4").show();
+            }
+
+            else {
+                $(".box").hide();
+            }
+        });
+    }).change();
+
+    $("select.snowy").change(function () {
+        $(this).find("option:selected").each(function () {
+            if ($(this).attr("value") == "snowy-1") {
+                $(".box").not(".snowy-1").hide();
+                $(".snowy-1").show();
+            }
+            else if ($(this).attr("value") == "snowy-2") {
+                $(".box").not(".snowy-2").hide();
+                $(".snowy-2").show();
+            }
+            else if ($(this).attr("value") == "snowy-3") {
+                $(".box").not(".snowy-3").hide();
+                $(".snowy-3").show();
+            }
+            else if ($(this).attr("value") == "snowy-4") {
+                $(".box").not(".snowy-4").hide();
+                $(".snowy-4").show();
+            }
+            else {
+                $(".box").hide();
+            }
+        });
+    }).change();
+
+    $("select.humid").change(function () {
+        $(this).find("option:selected").each(function () {
+            if ($(this).attr("value") == "humid-1") {
+                $(".box").not(".humid-1").hide();
+                $(".humid-1").show();
+            }
+            else if ($(this).attr("value") == "humid-2") {
+                $(".box").not(".humid-2").hide();
+                $(".humid-2").show();
+            }
+            else if ($(this).attr("value") == "humid-3") {
+                $(".box").not(".humid-3").hide();
+                $(".humid-3").show();
+            }
+            else if ($(this).attr("value") == "humid-4") {
+                $(".box").not(".humid-4").hide();
+                $(".humid-4").show();
+            }
+
+            else {
+                $(".box").hide();
+            }
+        });
+    }).change();
+
+    $("select.ultra").change(function () {
+        $(this).find("option:selected").each(function () {
+            if ($(this).attr("value") == "ultra-1") {
+                $(".box").not(".ultra-1").hide();
+                $(".ultra-1").show();
+            }
+            else if ($(this).attr("value") == "ultra-2") {
+                $(".box").not(".ultra-2").hide();
+                $(".ultra-2").show();
+            }
+            else if ($(this).attr("value") == "ultra-3") {
+                $(".box").not(".ultra-3").hide();
+                $(".ultra-3").show();
+            }
+            else if ($(this).attr("value") == "ultra-4") {
+                $(".box").not(".ultra-4").hide();
+                $(".ultra-4").show();
+            }
+            else if ($(this).attr("value") == "ultra-5") {
+                $(".box").not(".ultra-5").hide();
+                $(".ultra-4").show();
+            }
+
+            else {
+                $(".box").hide();
+            }
+        });
+    }).change();
+
+    $("select.presure").change(function () {
+        $(this).find("option:selected").each(function () {
+            if ($(this).attr("value") == "presure-1") {
+                $(".box").not(".presure-1").hide();
+                $(".presure-1").show();
+            }
+            else if ($(this).attr("value") == "presure-2") {
+                $(".box").not(".presure-2").hide();
+                $(".presure-2").show();
+            }
+            else if ($(this).attr("value") == "presure-3") {
+                $(".box").not(".presure-3").hide();
+                $(".presure-3").show();
+            }
+            else if ($(this).attr("value") == "presure-4") {
+                $(".box").not(".presure-4").hide();
+                $(".presure-4").show();
+            }
+            else if ($(this).attr("value") == "presure-5") {
+                $(".box").not(".presure-5").hide();
+                $(".presure-4").show();
+            }
+
+            else {
+                $(".box").hide();
+            }
+        });
+    }).change();
+
+    // popovers
+    $(".popup_close_filter").popover({
+        placement: 'top',
+        html: true,
+        content: function () {
+            var id = $(this).attr("id");
+            return $("#popup_" + id).html();
+        }
+    });
+
+    $(".tc, .allclose").popover({
+        placement: 'top',
+        trigger: 'manual',
+        html: true,
+        content: function () {
+            var r = '<div class="popup_close_condition ">'
+                       + '<p class="popup-warning">Are you sure you want to remove this weather condition from this filter?</p>'
+                       + '<div class="clearfix">';
+
+            if ($(this).hasClass("allclose"))
+                r += '<button type="button" id="btn-yes-' + $(this).attr('id') + '" onclick="toggleConditionInModule(this)" class="btn btn-info btn-xs">Yes</button>&nbsp;';
+            else
+                r += '<button type="button" id="btn-yes-' + $(this).attr('id') + '" onclick="toggleCondition(this)" class="btn btn-info btn-xs">Yes</button>&nbsp;';
+
+            r += '<button type="button" data-dismiss="" class="btn btn-info btn-xs popover-close">No</button>'
+               + '</div>'
+               + '</div>';
+
+            return r;
+        }
+    });
+
+    $(document).on("click", ".popover .popover-close", function (e) {
+        $(this).parents(".popover").hide();
+    });
+
+    var count = 1;
+});

@@ -1,0 +1,432 @@
+/*
+ *  Document   : custom.css
+ *  Author     : Bilal Munawar Janjua
+ *  Description: Weather Unlocked Custom Styles
+ *
+ */
+
+ .adj1{
+    width:300px;
+    margin: 0 auto
+ }
+ .text-adj1 {
+    color: #758594;
+    font-size: 15pt;
+    line-height: 29px;
+    margin-top: 10px;
+    margin-bottom: 10px!important;
+}
+.overflow-hid{
+    overflow: hidden;
+}
+.adj2{
+    padding-bottom: 20px
+}
+.adj3{
+    width: 400px!important
+}
+ .adj4{
+    width:130px;
+    
+ }
+ /*.adj5 li {
+    margin: 0 5px 0 0;
+    padding: 0;
+    position: relative;
+    }*/
+   
+ .adj6{
+    position: absolute;
+    right: 5px;
+    top: 8px;
+ }
+ .adj6 span::after{
+    width: 20px!important
+ }
+ .adj6 span{
+    height: 24px!important;
+    border-radius: 16px!important
+ }
+ .adj6 input:checked + span::after {
+    left: 31px !important;
+    width: 21px !important;
+ }
+ .margin-top-ten{
+    margin-top: 10px
+ }
+ .margin-top-twenty{
+    margin-top: 20px
+ }
+ .padding-ten{
+    padding: 10px
+ }
+ .padding-twenty{
+    padding: 20px
+ }
+ .margin-bottom-twenty{
+    margin-bottom: 20px
+ }
+  .margin-bottom-left{
+    margin-left: 20px
+ }
+  .margin-bottom-right{
+    margin-right: 20px
+ }
+ .no-padding{
+    padding: 0!important
+ }
+ .no-right-padding{
+    padding-right:0!important
+ }
+ .no-left-padding{
+    padding-right:0!important
+ }
+ .adj11 .btn-primary{
+/*    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2) inset, 0 4px 2px -2px #888;*/
+ }
+ .adj11 .btn-primary:hover, .adj11 .btn-primary:active, .adj11 .btn-primary:focus{
+    background-color: #5ccdde
+ }
+ .pressed {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 0 24px rgba(0, 0, 0, 0.4) inset, 3px 4px 4px -14px #000 !important;
+    transition: background-color 0.1s ease 0s;
+}
+ .btn-xl {
+    margin-left: 4px;
+}
+ .btn-xl:active{
+    background-color: #5ccdde!important;
+ }
+ .btn-xl:focus{
+  
+ }
+ .weather-sprite{
+    background: url(../img/weather-sprite.png) no-repeat;
+    display: block;
+    width: 49px;
+    height: 49px
+ }
+ .sun{
+    background-position: -44px -58px;
+ }
+ .cloud{
+    background-position: -301px -58px;
+ }
+ .rain-icon{
+    background-position: -168px -58px;
+ }
+ .snowfall{
+    background-position: -535px -57px;
+ }
+ .wind {
+    background-position: -43px -184px;
+ }
+ .humid-icon{
+    background-position: -416px -58px;
+ }
+ .humidity{
+    background-position: -169px -182px;
+ }
+ .uv{
+     background-position: -304px -180px;
+ }
+ .pressure{
+    background-position: -420px -182px;
+ }
+ .btn-weather{
+    background-color: #f4ede2
+ }
+
+ .plus {
+    font-size: 19pt;
+    font-weight: bold;
+    margin: 10px 0 0 10px;
+ }
+ .padding-left-twenty{
+    padding-left: 20px
+ }
+ .adj7{
+    margin: 0!important
+ }
+ .nomatch{
+    background-color:#89C4F4;
+ }
+ .sync-page-adj{
+    left: 0!important
+ }
+ .sync-page-adj2{
+    margin-left: 0!important
+ }
+ .adj8 {
+     font-size: 12pt;
+     
+color: #5ccdde;
+opacity: 1;
+position: absolute;
+right: 8px;
+top: 0px;
+z-index: 10;
+ }
+
+.adj9{
+    margin-top: 8px;
+    margin-bottom: 0px
+}
+.adj10{
+    border-right: 1px solid rgba(255, 255, 255, 0.4);
+}
+.tc-chk {
+    bottom: 5px;
+    left: 47%;
+    position: absolute;
+}
+.adj11{
+    padding-bottom: 30px
+}
+.pos-rel{
+    position: relative;
+}
+.popup-warning {
+    color: black;
+    font-size: 10pt;
+    font-weight: 300;
+    line-height: 15px;
+    margin-bottom: 7px;
+    width: 142px;
+}
+.adj12{
+    color: #5ccdde;
+    opacity: 1;
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    z-index: 10;
+}
+.adj13 {
+    background-color: #f5f5f5;
+    margin: 0 15px 0 17px;
+}
+#filter_ul .active a{
+    background-color: #f5f5f5
+}
+.adj5{
+    margin-left: 3px;
+}
+.adj14{
+    padding: 20px
+}
+.adj14 button{
+    line-height: 33px
+}
+.adj7 .form-group{
+    border-color: #d7d7d7;
+    padding: 40px 0
+}
+.form-bordered .form-group label{
+    color: #888888
+}
+.no-left-padding{
+    padding-left: 0
+}
+.padding-top-ten{
+    padding-top: 10px!important
+}
+.padding-bottom-twenty{
+    padding-bottom: 10px
+}
+
+
+/*Changes on 28/11/15*/
+.disable-btns {
+   pointer-events: none;
+   cursor: not-allowed;
+}
+
+.normal {
+    background-color: #f0f0f0;
+    border-color: grey;
+}
+#ex1Slider .slider-selection {
+    background: #BABABA;
+}
+.width-adj4 {
+    display: block;
+    float: left;
+    width: 50%;
+     font-size: 0.8em;
+}
+.qualifer, .rain, .rain-dd, .suns, .cloudy, .windy, .snowy, .humid, .presure, .ultra{
+    margin-top: 22px;
+}
+.allclose {
+    position: absolute;
+    right: 9px;
+    top: 6px;
+}
+.white-bg{
+    background-color: white
+}
+.tc {cursor: pointer;}
+.msub-categories {  position: absolute;}
+.msub-categories.default {display: block; position: absolute;}
+.mcategory-toggle.active { color:red; }
+.module-row {
+    display: none;
+    left: 19px;
+    /*overflow-y: hidden;
+    position: absolute;
+    top: 98px;*/
+    width: 100%;
+}
+
+.tc-all{
+    background-color: #f9f9f9;
+    border: 1px solid #e6e6e6;
+    padding: 20px 0;
+     width: 100%;
+}
+
+.b-modi{
+    background-color: white;
+    border: 1px solid #e6e6e6;
+    padding: 25px 25px 50px 25px;
+}
+.dd-adj{
+    padding: 44px 0;
+}
+
+#filter_selected_action_type{
+    margin-top:0;
+    margin-bottom:10px;
+        
+}
+
+@media (max-width: 992px) 
+{
+    .filter-conditions {
+        width:100%;
+    }
+}
+
+.action-type{
+    /*width:auto;
+    min-width:100px;
+    margin-left:auto;
+    margin-right:auto;*/
+    padding:15% 0;
+}
+
+
+/* resizable left menu */
+
+#split-bar {
+    background-color:none;
+    /*height:100%;*/
+    float: right;
+    width: 21px;
+    cursor: col-resize;
+    /*border-right: solid black 1px;
+    border-left: solid black 1px;*/
+
+    /*align-items: center;*/
+    display: flex;
+     color: white;
+    font-size: 1.5em;
+}
+
+.sidebar-nav a {
+white-space: nowrap;
+}
+
+#filter_ul a 
+{
+    border: solid 1px;
+    border-color: #ebeef2 #ebeef2 transparent;
+}
+
+.nav-tabs > li.active > div
+{
+    border-color: #ebeef2 #ebeef2 transparent;
+    color: #454e59;
+}
+
+/*#filter_ul .active div {
+    background-color: #f5f5f5;
+    margin-left: 3px;
+    margin-right: 3px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom:10px;
+    padding-top:10px;
+}
+*/
+
+.text-camelcase {
+    text-transform: capitalize;
+}
+
+.dropdown-menu > li > form > a {
+    clear: both;
+    color: #333;
+    display: block;
+    font-weight: normal;
+    line-height: 1.42857;
+    white-space: nowrap;
+    padding: 8px 10px;
+}
+
+.dropdown-menu > li > form > a:hover {
+    background-color: #5CAFDE;
+    color: #ffffff;
+    text-decoration:none;
+}
+
+#login-container h1 p {color:white; font-weight:bold;}
+
+.no_margin{
+    margin:0px !important;
+}
+
+.small-space {
+    float: left;
+    margin:10px;
+}
+
+.lead {
+    text-align: center;
+}
+
+#login-container h2 p{
+    color: white;
+    /*font-weight: 100;*/
+}
+
+.import-campaigns-table th:first-child,
+.import-campaigns-table td:first-child{
+    text-align:center;
+}
+
+.and-or{margin-bottom:10px;}
+
+.btn-cancel:hover, .btn-cancel:focus, .btn-cancel:active, .btn-cancel.active, .open>.dropdown-toggle.btn-cancel {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+
+#filter_ul li{
+    padding:0;
+
+}
+#filter_ul li.active{padding:10px;border-bottom:none;}
+#filter_name {
+border:none;}
+
+#filter_1_div > .well {
+    border-top:none;
+     box-shadow: none
+}
+
+.sidebar-title {width:220px;}
